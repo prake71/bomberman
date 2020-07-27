@@ -18,6 +18,10 @@ _global_script_class_icons={
 config/name="bomberman"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/resizable=false
+
 [rendering]
 
 quality/driver/driver_name="GLES2"
