@@ -1,4 +1,5 @@
 # bomberman
 A Bomberman Clone
-Example Implementation of a bomberman game for training reasons.
+
+Implementation of a Bomberman Clone for learning Godot network functionality and more
 
