@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/player/player1.png" type="Texture" id=1]
+[ext_resource path="res://scenes/player/Player.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 18.0945
@@ -56,19 +57,20 @@ tracks/0/keys = {
 
 [node name="Player" type="KinematicBody2D"]
 z_index = 2
+script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 3
-frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Timer" type="Timer" parent="."]
+[node name="DropBombCoolDownTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 2 )
 anims/respawn = SubResource( 3 )
 anims/walking = SubResource( 4 )
+[connection signal="timeout" from="DropBombCoolDownTimer" to="." method="_on_DropBombCoolDownTimer_timeout"]
