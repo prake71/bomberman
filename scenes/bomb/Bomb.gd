@@ -9,26 +9,45 @@ onready var tile_solid_id = tilemap.tile_set.find_tile_by_name("SolidBrick")
 func _ready():
 	print("in Bomb.gd")
 	print(tile_solid_id)
-	# $AnimationPlayer.play("default")
-func propagate_explosion(centerpos, propagation):
-	var center_tile_pos = tilemap.world_to_map(centerpos)
+	$AnimationPlayer.play("default")
 	
+func propagate_explosion(centerpos, propagation):
+	var border_explosion = null
+	var center_tile_pos = tilemap.world_to_map(centerpos)
+	var explosions = []
 	for i in range(1, EXPLOSION_RADIUS + 1):
-		var tilepos = center_tile_pos + propagation * 1
+		var tilepos = center_tile_pos + propagation * i
 		if tilemap.get_cellv(tilepos) != tile_solid_id:
-			# Boom!
+			# Boom !
 			var explosion = explosion_scene.instance()
+			explosion.owner = owner
 			explosion.position = tilemap.centered_world_pos_from_tilepos(tilepos)
-			get_parent().add_child(explosion)
+			explosion.direction = propagation
+			# By default SIDE, but could be also SIDE_BORDER...
+			explosion.type = explosion.SIDE
+			border_explosion = explosion
+			# Don't add the explosion to the scene now given
+			# we don't know yet it type (i.e. if it is really a
+			# SIDE or a SIDE_BORDER)
+			explosions.append(explosion)
 		else:
-			# Explosion was stopped by a solid brick
+			# Explosion was stopped by a solid block
 			break
+	
+	# Last explosion should have a special animation not to end abruptly
+	if border_explosion:
+		border_explosion.type = border_explosion.SIDE_BORDER
+	
+	# All explosions are ready, add them to the scene
+	for explosion in explosions:
+		get_parent().add_child(explosion)
+	
 
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	# Make the bomb blow up at the end of the animation
-
+	print("Bomb: AnimationPlayer finished")
 	# First, set a center explosion at the bomb position
 	var center_explosion = explosion_scene.instance()
 	center_explosion.owner = owner
@@ -45,4 +64,11 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 	# Finally destroy the bomb node
 	queue_free()
+
+
+
+func _on_EnableCollisionTimer_timeout():
+	# Wait a bit before enable collision in order not to have
+	# the player who have drop the bomb colliding with it
+	get_node("CollisionShape2D").disabled = false
 

@@ -9,7 +9,6 @@ radius = 16.4332
 [sub_resource type="Animation" id=2]
 resource_name = "default"
 length = 2.0
-loop = true
 step = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -43,4 +42,5 @@ autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/default = SubResource( 2 )
+[connection signal="timeout" from="EnableCollisionTimer" to="." method="_on_EnableCollisionTimer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
