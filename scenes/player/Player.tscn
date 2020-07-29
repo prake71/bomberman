@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/player/Player.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 18.0945
+radius = 23.6791
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
@@ -55,7 +55,9 @@ tracks/0/keys = {
 "values": [ 1, 2 ]
 }
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"players",
+]]
 z_index = 2
 script = ExtResource( 2 )
 

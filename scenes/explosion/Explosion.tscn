@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/explosion/explosion.png" type="Texture" id=1]
+[ext_resource path="res://scenes/explosion/Explosion.gd" type="Script" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "explosion_center"
@@ -59,6 +60,7 @@ texture = ExtResource( 1 )
 vframes = 3
 hframes = 7
 frame = 20
+script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/explosion_center = SubResource( 1 )
